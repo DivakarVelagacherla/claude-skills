@@ -1,6 +1,6 @@
 ---
 name: divakar-documentation-skill
-description: Organize and write technical notes/documentation the way Divakar structures his notes repos (modeled on the `software-engineering` repo). Use whenever Divakar is adding a new topic/book/notes folder to a personal knowledge repo, asking "update repo" to bring recent changes into line with conventions, synthesizing a book from source PDFs, or asking how to structure/split/name a new set of technical notes. Captures his exact rules: one top-level folder per topic (kebab-cased title as the folder name, stable once created), three content shapes (book style, topic-notes style, design case-study style) picked by source material, the PDF-to-book synthesis workflow, and the "update repo" standing command.
+description: Organize and write technical notes/documentation the way Divakar structures his notes repos (modeled on the `software-engineering` repo). Use whenever Divakar is adding a new topic/book/notes folder to a personal knowledge repo, asking "update repo" to bring recent changes into line with conventions, asking to sync/consolidate Notion notes into the repo, synthesizing a book from source PDFs, or asking how to structure/split/name a new set of technical notes. Captures his exact rules: one top-level folder per topic (kebab-cased title as the folder name, stable once created), three content shapes (book style, topic-notes style, design case-study style) picked by source material, the PDF-to-book synthesis workflow, syncing Notion notes into the repo using the metadata `divakar-notion-skill` attaches to them, and the "update repo" standing command.
 ---
 
 # Divakar's Documentation Skill
@@ -89,10 +89,57 @@ doesn't balloon the way a naive "read every PDF in full" pass does:
 
 ---
 
+## Syncing Notion Notes Into the Repo
+
+This is the primary way new content now enters the repo: Divakar studies via
+`divakar-learning-roadmap`, notes land in Notion via `divakar-notion-skill`, and this skill moves
+matured notes into `software-engineering/`. It only works mechanically because every Notion note
+already carries, in its metadata header, exactly what this skill would otherwise have to guess:
+
+```
+**Topic:** <Topic title> (repo folder: `<kebab-case-topic-folder>`)
+**Concept:** <Concept name>
+**Repo content shape:** book-style | topic-notes-style | design-case-study
+**Repo target:** <topic-folder>/<file or part>.md
+```
+
+**Use that metadata directly — don't re-derive the folder name, the shape, or placement from the
+note's prose.** The decision was already made once, upfront, in the roadmap. Steps:
+
+1. Pull the topic's Notion notes (via Notion search/fetch) and group them by their `Repo target`
+   field.
+2. For each distinct `Repo target` file:
+   - If the topic folder doesn't exist in the repo yet, create it named exactly per `Topic`'s
+     repo folder value, with its own `README.md`.
+   - **Book-style** — merge the concept's content into the target part file as flowing prose, in
+     the same order as the roadmap's session list for that tier. Don't concatenate Notion's
+     sections as-is: drop the "One-Line Summary" / "Three-Question Ritual" headers and fold their
+     substance into prose, per the book-style rules above.
+   - **Topic-notes-style** — write/update the concept's own small flat file (named after the
+     Concept, not the session), keeping the ritual's substance but reshaped into the repo's
+     lighter note format.
+   - **Design-case-study** — write/update `<concept-kebab-case>.md` as a flat file, plus any
+     diagram, per the colocation rule above.
+3. Update the topic's `README.md` (and any parent README that also lists that content) to link
+   the new/updated file — always by Concept name. **A session number must never appear in any
+   repo file or README.**
+4. If a Notion note is missing its metadata header (predates `divakar-notion-skill`, or the
+   header wasn't filled in), stop and resolve Topic/Concept/Shape/Target with Divakar before
+   writing anything — don't guess by parsing a "session N" reference out of the note body; that
+   reference is exactly the thing that breaks once it's in the repo.
+5. If a note's metadata disagrees with what's already in the repo (e.g. it says topic-notes-style
+   but the folder is already book-style), flag it rather than silently overriding either side —
+   this is the one case genuinely worth a clarifying question, since it means the upfront
+   decision and the repo have drifted.
+
+---
+
 ## "Update Repo" — Standing Command
 
 When Divakar says **"update repo,"** treat it as a request to bring whatever was just added into
-line with these conventions, without re-explaining what's wrong each time:
+line with these conventions, without re-explaining what's wrong each time. This covers both
+content already sitting in the local working tree *and* matured Notion notes ready to sync (the
+section above) — run both passes:
 
 1. Run `git status` to find new/untracked and modified files since the last commit.
 2. For each new file, check it against the relevant convention above — topic folder naming
@@ -120,3 +167,5 @@ line with these conventions, without re-explaining what's wrong each time:
   clarifying question rather than assuming an existing approach transfers unchanged.
 - Repo structure exists to serve an automated downstream consumer (the portfolio site) — treat
   predictability and stability of existing structure as higher priority than local tidiness.
+- Never let a session number (e.g. "session 12") appear in any repo file, README, or link —
+  the repo only knows topics and concepts. That reference only means something inside Notion.

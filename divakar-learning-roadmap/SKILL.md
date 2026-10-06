@@ -90,6 +90,22 @@ note template, and book/reference integration rules all live there).
   a book-style topic). That consolidation is deliberate, not automatic, and isn't part of running
   a learning session itself.
 
+### The shared identifier contract (this is what keeps Notion and the repo aligned)
+
+The root cause of Notion notes and the repo drifting apart is referring to material by session
+number — the repo has no concept of "session 12," so a Notion note that says "see session 12"
+becomes unresolvable once it's out of Notion. This roadmap is where that gets prevented, by
+fixing three things up front and handing them to the other two skills unchanged:
+
+1. **Repo topic folder name** (from Step 1) — passed to `divakar-notion-skill` as the topic's
+   identity and to `divakar-documentation-skill` as the destination folder. Decided once, here.
+2. **Content shape per tier** (from Step 2) — passed to `divakar-notion-skill` so every session
+   note is tagged with its eventual shape at creation time, and to `divakar-documentation-skill`
+   so consolidation never has to guess a shape from scratch.
+3. **Concept name per session** (from Step 3) — the only identifier that may ever be used to
+   reference a piece of material, in Notion, in the repo, or in conversation. Session numbers
+   are schedule metadata, not references.
+
 ---
 
 ## Review Sessions (End of Each Tier)
@@ -122,24 +138,42 @@ When Divakar asks for a roadmap on a new topic:
 - What's the deadline? (any interviews scheduled?)
 - What does he already know? (do a quick 5-question assessment)
 - Which reference book or resource exists?
+- **Decide the repo topic folder name now**, per `divakar-documentation-skill`'s naming rule:
+  kebab-cased version of the topic's real title (e.g. "Internals of Core Java" →
+  `internals-of-core-java`). If the topic already has a folder in `software-engineering/`,
+  reuse that exact name — don't invent a second spelling. This name is the one fixed identifier
+  every downstream artifact (Notion pages, eventual repo folder) will carry, decided once, here.
 
-**Step 2 — Identify the tiers**
+**Step 2 — Identify the tiers and their repo content shape**
 - What are the 5–6 core fundamental topics? (Tier 1, ~1 week each)
 - What are the patterns that build on them? (Tier 2, ~4 weeks)
 - What are the classic applied problems? (Tier 3)
+- **Decide the content shape for Tier 1 + Tier 2 now**, per `divakar-documentation-skill`:
+  **book-style** if a single flowing reference source runs through the whole topic (e.g. a book
+  like Alex Xu's), **topic-notes-style** if it's inherently a set of discrete, mostly-independent
+  concepts with no single narrative source. Tier 3 (Applied Problems) is always
+  **design-case-study** shape — it maps directly to `system-design/designs/`-style, one file per
+  problem. Record this shape alongside the roadmap; it's not re-decided later at consolidation
+  time.
 
 **Step 3 — Build the session list**
 - 5 sessions per week, one concept per session
 - Order: simpler → complex, foundations → applications
-- Each session title = the concept name + "what you must be able to say"
+- **Each session gets a stable Concept name** — this is the real identifier (it becomes the
+  Notion subpage title and, eventually, the repo section/file name). The session *number* is
+  schedule-only: it says when the concept gets studied, never what the concept is. Nothing
+  downstream — not a Notion note, not a repo file, not a cross-reference — should ever say
+  "session 12" in place of the concept's actual name.
 
 **Step 4 — Identify reference material**
 - Book, course, YouTube playlist that runs parallel
 - Map each chapter/video to the corresponding session week
 
 **Step 5 — Present the roadmap**
-- Table format: Week | Session | Topic | What You Must Be Able to Say
-- Include total session count and estimated weeks
+- Table format: Week | Session # | Concept | What You Must Be Able to Say — Session # is a
+  sequencing column only; Concept is the column every other skill and document will reference.
+- Include total session count and estimated weeks, the repo topic folder name, and the content
+  shape(s) decided in Step 2
 - Get sign-off before starting
 
 ---

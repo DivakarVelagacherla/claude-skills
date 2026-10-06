@@ -14,18 +14,47 @@ part of his consolidated `software-engineering` notes repo.
 
 ## Page Hierarchy
 
-- **Each topic gets its own Notion page.** One page per topic, not one page per concept.
-- **Each session on that topic is a subpage inside it.** Concepts live as subpages under the
-  topic page, keeping the topic page itself a lightweight index — the same role a folder's
-  `README.md` plays in the software-engineering repo (see `divakar-documentation-skill`).
+- **Each topic gets its own Notion page**, titled with the same repo topic folder name decided
+  in `divakar-learning-roadmap` Step 1 (display case is fine in Notion, e.g. "Internals of Core
+  Java" — but it must kebab-case to exactly the repo folder name, `internals-of-core-java`, with
+  no second spelling). One page per topic, not one page per concept.
+- **Each session on that topic is a subpage inside it, titled with the Concept name — never
+  "Session N."** The session number is stored as a page property (for ordering/scheduling) but
+  is never the title and never how the subpage gets referenced.
 - Push after a session's three-question ritual passes, not during — notes should reflect
   understanding already reached, not function as a crutch while still figuring it out.
 
 ---
 
+## Naming Rule — Concept, Never Session Number
+
+This is the rule that keeps Notion and the `software-engineering` repo from drifting apart: the
+repo has no idea what "session 12" means, so that reference becomes dead the moment it leaves
+Notion. To prevent that:
+
+- **Never write "see session N" anywhere** — not in a note body, not in a cross-link, not when
+  talking about the material out loud. Always name (and link to) the concept itself.
+- The session number is metadata about *when* something was studied, not *what* it is. It can
+  appear in the metadata header below for scheduling context, but it is never a lookup key.
+- If Divakar refers to "session 12" when asking for something, resolve it to the concept name
+  via the roadmap's session list before doing anything with it — don't carry "session 12" forward
+  into a note, a repo file, or any other artifact.
+
+---
+
 ## Standard Session Note Template
 
+Every note starts with a metadata header carrying the identifiers decided in
+`divakar-learning-roadmap` — this is what lets `divakar-documentation-skill` consolidate later
+without re-deriving or guessing anything:
+
 ```
+**Topic:** <Topic title> (repo folder: `<kebab-case-topic-folder>`)
+**Concept:** <Concept name — matches the roadmap's session list exactly>
+**Session #:** <N>  — scheduling only, never used as a reference
+**Repo content shape:** book-style | topic-notes-style | design-case-study
+**Repo target:** <topic-folder>/<expected file or part>.md
+
 ## The One-Line Summary
 > [one sentence that captures the concept and its tradeoff]
 
@@ -78,8 +107,9 @@ of the same thing — keep their shapes distinct on purpose:
   Notion, consolidating them into `software-engineering/` is a separate, deliberate step — never
   an automatic mirror of whatever is in Notion at a given moment.
 
-When that consolidation happens, pick the content shape per `divakar-documentation-skill`'s
-rules, not Notion's:
+The content shape and repo target in each note's metadata header are decided once, upfront, in
+`divakar-learning-roadmap` — never re-derived or guessed at consolidation time. That's what
+makes the hand-off mechanical instead of interpretive:
 - **Building toward a single flowing narrative** (e.g. a book like *Internals of Core Java*) —
   **convert** the Q&A/ritual structure into flowing prose. Don't carry the three-question tables
   or "One-Line Summary" headers into the book; the ritual is a learning tool, not target prose.
