@@ -74,48 +74,21 @@ Always in this order:
 3. When would you NOT use it?
 
 **Stage 7 — Push to Notion**
-After ritual passes — push clean session notes. Format: one-line summary, the problem, the concept, key tradeoffs, three-question answers, tool/AWS equivalents where relevant.
+After ritual passes — push clean session notes using `divakar-notion-skill` (page hierarchy,
+note template, and book/reference integration rules all live there).
 
 ---
 
-## Notion Structure
+## Relationship to Other Skills
 
-Each topic gets its own Notion page. Each session is a subpage inside it.
-
-Standard session note format:
-```
-## The One-Line Summary
-> [one sentence that captures the concept and its tradeoff]
-
-## The Problem
-[scenario without jargon]
-
-## What [Concept] Is
-[explanation with analogy]
-
-## Key Tradeoffs
-[comparison table or bullet list]
-
-## Three-Question Ritual
-| Question | Answer |
-|---|---|
-| What problem does it solve? | ... |
-| What breaks without it? | ... |
-| When NOT to use it? | ... |
-
-## Tool/AWS Equivalents
-[mapping table]
-```
-
----
-
-## Book/Reference Integration
-
-For topics with a reference book (e.g., Alex Xu for system design):
-- Read **after** the session, not before
-- Read **section by section** as each topic is covered — not the full chapter upfront
-- Return with: "what was different or new from what we covered?"
-- Only integrate into Notion notes after comparing both sources
+- **`divakar-notion-skill`** owns Stage 7: the Notion page hierarchy (topic page → session
+  subpages), the standard session note template, and how to fold in reference-book material.
+  Don't duplicate that template here — use that skill whenever a session reaches Stage 7.
+- **`divakar-documentation-skill`** owns the later, separate step of consolidating a topic's
+  Notion notes into the `software-engineering` repo once there's enough material — picking a
+  content shape and converting the Notion ritual format into that shape (e.g. flowing prose for
+  a book-style topic). That consolidation is deliberate, not automatic, and isn't part of running
+  a learning session itself.
 
 ---
 
