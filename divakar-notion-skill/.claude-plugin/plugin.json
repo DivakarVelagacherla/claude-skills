@@ -1,0 +1,6 @@
+{
+  "name": "divakar-notion-skill",
+  "version": "1.0.0",
+  "description": "Push structured learning-session notes to Notion using a standard page hierarchy and note template.",
+  "author": { "name": "Divakar Velagacherla" }
+}
