@@ -1,0 +1,6 @@
+{
+  "name": "divakar-learning-roadmap",
+  "version": "1.0.0",
+  "description": "Build a Socratic learning roadmap for any technical topic, modeled on Divakar's system design prep methodology.",
+  "author": { "name": "Divakar Velagacherla" }
+}

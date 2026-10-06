@@ -1,0 +1,25 @@
+{
+  "name": "claude-skills",
+  "owner": { "name": "Divakar Velagacherla" },
+  "description": "Divakar's personal Claude Agent Skills — install whichever ones you want individually.",
+  "plugins": [
+    {
+      "name": "divakar-learning-roadmap",
+      "source": "./divakar-learning-roadmap",
+      "description": "Build a Socratic learning roadmap for any technical topic.",
+      "category": "learning"
+    },
+    {
+      "name": "divakar-notion-skill",
+      "source": "./divakar-notion-skill",
+      "description": "Push structured learning-session notes to Notion.",
+      "category": "learning"
+    },
+    {
+      "name": "divakar-documentation-skill",
+      "source": "./divakar-documentation-skill",
+      "description": "Organize technical notes into a documentation repo.",
+      "category": "learning"
+    }
+  ]
+}
